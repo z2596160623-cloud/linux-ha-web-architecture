@@ -1,5 +1,7 @@
 # Linux Web 高可用架构实验室
 
+[![Validate infrastructure code](https://github.com/z2596160623-cloud/linux-ha-web-architecture/actions/workflows/validate.yml/badge.svg)](https://github.com/z2596160623-cloud/linux-ha-web-architecture/actions/workflows/validate.yml)
+
 [English](README_EN.md) · [部署指南](docs/deployment.md) · [运维手册](docs/operations.md) · [故障复盘](docs/troubleshooting.md)
 
 这是一个由我独立搭建、配置和验证的 Rocky Linux 多节点 Web 高可用实验室。项目以 WordPress 为业务载荷，通过 Ansible 自动化完成 Web、数据库、共享存储、负载均衡和 VIP 高可用配置，并保留了真实运行截图与故障恢复记录。

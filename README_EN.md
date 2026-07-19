@@ -1,5 +1,7 @@
 # Linux High-Availability Web Architecture Lab
 
+[![Validate infrastructure code](https://github.com/z2596160623-cloud/linux-ha-web-architecture/actions/workflows/validate.yml/badge.svg)](https://github.com/z2596160623-cloud/linux-ha-web-architecture/actions/workflows/validate.yml)
+
 [中文](README.md) · [Deployment](docs/deployment.md) · [Operations](docs/operations.md) · [Incident Review](docs/troubleshooting.md)
 
 This is a multi-node Rocky Linux web infrastructure lab that I designed, implemented, and verified independently. WordPress is used as the workload, while Ansible provisions the web tier, database, shared storage, load balancers, and a highly available virtual IP.
