@@ -1,6 +1,6 @@
 # Linux High-Availability Web Architecture Lab
 
-[![Validate infrastructure code](https://github.com/z2596160623-cloud/linux-ha-web-architecture/actions/workflows/validate.yml/badge.svg)](https://github.com/z2596160623-cloud/linux-ha-web-architecture/actions/workflows/validate.yml)
+[![Validate infrastructure code](https://github.com/z2596160623-cloud/linux-ha/actions/workflows/validate.yml/badge.svg)](https://github.com/z2596160623-cloud/linux-ha/actions/workflows/validate.yml)
 
 [中文](README.md) · [Deployment](docs/deployment.md) · [Operations](docs/operations.md) · [Incident Review](docs/troubleshooting.md)
 

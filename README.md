@@ -1,6 +1,6 @@
 # Linux Web 高可用架构实验室
 
-[![Validate infrastructure code](https://github.com/z2596160623-cloud/linux-ha-web-architecture/actions/workflows/validate.yml/badge.svg)](https://github.com/z2596160623-cloud/linux-ha-web-architecture/actions/workflows/validate.yml)
+[![Validate infrastructure code](https://github.com/z2596160623-cloud/linux-ha/actions/workflows/validate.yml/badge.svg)](https://github.com/z2596160623-cloud/linux-ha/actions/workflows/validate.yml)
 
 [English](README_EN.md) · [部署指南](docs/deployment.md) · [运维手册](docs/operations.md) · [故障复盘](docs/troubleshooting.md)
 
