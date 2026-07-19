@@ -1,0 +1,6 @@
+---
+# Copy this file to vault.yml, replace every value, and encrypt it.
+# Keepalived PASS authentication accepts at most eight characters.
+vault_wp_db_password: replace-with-a-strong-database-password
+vault_haproxy_stats_password: replace-with-a-strong-stats-password
+vault_keepalived_auth_pass: changeit

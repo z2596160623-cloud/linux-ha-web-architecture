@@ -1,0 +1,29 @@
+---
+- name: Verify that the HAProxy statistics secret was supplied
+  ansible.builtin.assert:
+    that:
+      - vault_haproxy_stats_password is defined
+      - vault_haproxy_stats_password | length >= 12
+    fail_msg: Supply vault_haproxy_stats_password through an encrypted Vault file.
+  no_log: true
+
+- name: Install HAProxy
+  ansible.builtin.dnf:
+    name: haproxy
+    state: present
+
+- name: Render and validate the HAProxy configuration
+  ansible.builtin.template:
+    src: haproxy.cfg.j2
+    dest: /etc/haproxy/haproxy.cfg
+    owner: root
+    group: root
+    mode: "0600"
+    validate: haproxy -c -f %s
+  notify: Restart HAProxy
+
+- name: Enable HAProxy
+  ansible.builtin.service:
+    name: haproxy
+    state: started
+    enabled: true

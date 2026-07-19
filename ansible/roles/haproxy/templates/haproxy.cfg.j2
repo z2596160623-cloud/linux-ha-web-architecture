@@ -1,0 +1,35 @@
+global
+    log /dev/log local0
+    chroot /var/lib/haproxy
+    stats socket /var/lib/haproxy/stats
+    user haproxy
+    group haproxy
+    daemon
+
+defaults
+    log global
+    mode http
+    option httplog
+    option dontlognull
+    timeout connect 5s
+    timeout client 50s
+    timeout server 50s
+
+frontend wordpress_frontend
+    bind *:{{ web_port }}
+    default_backend wordpress_backends
+
+backend wordpress_backends
+    balance roundrobin
+    option httpchk GET /
+    http-check expect status 200
+{% for host in groups['webservers'] %}
+    server {{ host }} {{ hostvars[host].ansible_host }}:{{ web_port }} check inter 2s rise 2 fall 5
+{% endfor %}
+
+listen statistics
+    bind *:{{ haproxy_stats_port }}
+    stats enable
+    stats refresh 30s
+    stats uri {{ haproxy_stats_path }}
+    stats auth {{ haproxy_stats_user }}:{{ vault_haproxy_stats_password }}

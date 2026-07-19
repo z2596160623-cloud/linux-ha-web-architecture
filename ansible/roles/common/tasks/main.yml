@@ -1,0 +1,21 @@
+---
+- name: Verify the managed host is Red Hat compatible
+  ansible.builtin.assert:
+    that:
+      - ansible_os_family == "RedHat"
+      - ansible_distribution_major_version | int >= 8
+    fail_msg: This lab expects Rocky Linux or another RHEL-compatible 8+ host.
+
+- name: Install baseline operations packages
+  ansible.builtin.dnf:
+    name:
+      - chrony
+      - curl
+      - tar
+    state: present
+
+- name: Enable time synchronization
+  ansible.builtin.service:
+    name: chronyd
+    state: started
+    enabled: true

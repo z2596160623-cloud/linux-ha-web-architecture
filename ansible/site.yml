@@ -1,0 +1,37 @@
+---
+- name: Apply the common Rocky Linux baseline
+  hosts: managed
+  become: true
+  roles:
+    - role: common
+      tags: [common]
+
+- name: Provision shared NFS storage
+  hosts: storages
+  become: true
+  roles:
+    - role: nfs
+      tags: [nfs]
+
+- name: Provision the WordPress database
+  hosts: databases
+  become: true
+  roles:
+    - role: database
+      tags: [database]
+
+- name: Provision the Nginx and PHP-FPM web tier
+  hosts: webservers
+  become: true
+  roles:
+    - role: web
+      tags: [web]
+
+- name: Provision the highly available load-balancer tier
+  hosts: load_balancers
+  become: true
+  roles:
+    - role: haproxy
+      tags: [haproxy]
+    - role: keepalived
+      tags: [keepalived]

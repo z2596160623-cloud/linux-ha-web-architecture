@@ -1,0 +1,39 @@
+---
+- name: Verify that the database secret was supplied
+  ansible.builtin.assert:
+    that:
+      - vault_wp_db_password is defined
+      - vault_wp_db_password | length >= 12
+    fail_msg: Supply vault_wp_db_password through an encrypted Vault file.
+  no_log: true
+
+- name: Install MySQL and its Python driver
+  ansible.builtin.dnf:
+    name:
+      - mysql-server
+      - python3-PyMySQL
+    state: present
+
+- name: Enable MySQL
+  ansible.builtin.service:
+    name: mysqld
+    state: started
+    enabled: true
+
+- name: Create the WordPress database
+  community.mysql.mysql_db:
+    name: "{{ wp_db_name }}"
+    encoding: utf8mb4
+    collation: utf8mb4_unicode_ci
+    state: present
+    login_unix_socket: /var/lib/mysql/mysql.sock
+
+- name: Create the least-privilege WordPress database account
+  community.mysql.mysql_user:
+    name: "{{ wp_db_user }}"
+    host: "{{ wp_db_host_pattern }}"
+    password: "{{ vault_wp_db_password }}"
+    priv: "{{ wp_db_name }}.*:ALL"
+    state: present
+    login_unix_socket: /var/lib/mysql/mysql.sock
+  no_log: true

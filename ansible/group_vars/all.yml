@@ -1,0 +1,22 @@
+---
+lab_network_cidr: 192.168.88.0/24
+
+vip_address: 192.168.88.80
+vip_prefix: 24
+keepalived_interface: eth0
+keepalived_virtual_router_id: 51
+
+web_port: 80
+web_document_root: /usr/share/nginx/html
+
+nfs_host: 192.168.88.31
+nfs_export_root: /nfs_root
+nfs_content_dir: html
+
+wp_db_name: wordpress
+wp_db_user: wp_app
+wp_db_host_pattern: 192.168.88.%
+
+haproxy_stats_port: 1080
+haproxy_stats_path: /stats
+haproxy_stats_user: operator

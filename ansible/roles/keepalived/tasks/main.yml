@@ -1,0 +1,30 @@
+---
+- name: Verify Keepalived host variables and secret
+  ansible.builtin.assert:
+    that:
+      - keepalived_state in ["MASTER", "BACKUP"]
+      - keepalived_priority | int > 0
+      - vault_keepalived_auth_pass is defined
+      - vault_keepalived_auth_pass | length <= 8
+    fail_msg: Define the MASTER/BACKUP variables and an up-to-eight-character Vault secret.
+  no_log: true
+
+- name: Install Keepalived
+  ansible.builtin.dnf:
+    name: keepalived
+    state: present
+
+- name: Render the Keepalived configuration
+  ansible.builtin.template:
+    src: keepalived.conf.j2
+    dest: /etc/keepalived/keepalived.conf
+    owner: root
+    group: root
+    mode: "0600"
+  notify: Restart Keepalived
+
+- name: Enable Keepalived
+  ansible.builtin.service:
+    name: keepalived
+    state: started
+    enabled: true

@@ -1,0 +1,31 @@
+---
+- name: Install NFS utilities
+  ansible.builtin.dnf:
+    name: nfs-utils
+    state: present
+
+- name: Create the shared application directory
+  ansible.builtin.file:
+    path: "{{ nfs_export_root }}/{{ nfs_content_dir }}"
+    state: directory
+    owner: "48"
+    group: "48"
+    mode: "0775"
+
+- name: Export the shared storage to the isolated lab network
+  ansible.builtin.lineinfile:
+    path: /etc/exports
+    regexp: "^{{ nfs_export_root | regex_escape }}\\s"
+    line: "{{ nfs_export_root }} {{ lab_network_cidr }}(rw,sync,root_squash,no_subtree_check)"
+    create: true
+    mode: "0644"
+  notify: Reload NFS exports
+
+- name: Enable RPC and NFS services
+  ansible.builtin.service:
+    name: "{{ item }}"
+    state: started
+    enabled: true
+  loop:
+    - rpcbind
+    - nfs-server

@@ -1,0 +1,9 @@
+ansible/inventory.ini
+ansible/vault.yml
+*.retry
+*.log
+.ansible/
+.venv/
+__pycache__/
+.DS_Store
+Thumbs.db

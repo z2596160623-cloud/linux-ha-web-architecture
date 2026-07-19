@@ -1,0 +1,35 @@
+---
+- name: Install the web runtime and NFS client
+  ansible.builtin.dnf:
+    name:
+      - nginx
+      - php-fpm
+      - php-mysqlnd
+      - php-json
+      - nfs-utils
+    state: present
+
+- name: Create the Nginx document root
+  ansible.builtin.file:
+    path: "{{ web_document_root }}"
+    state: directory
+    owner: apache
+    group: apache
+    mode: "0755"
+
+- name: Persistently mount the shared application content
+  ansible.posix.mount:
+    path: "{{ web_document_root }}"
+    src: "{{ nfs_host }}:{{ nfs_export_root }}/{{ nfs_content_dir }}"
+    fstype: nfs
+    opts: "rw,_netdev"
+    state: mounted
+
+- name: Enable the web services
+  ansible.builtin.service:
+    name: "{{ item }}"
+    state: started
+    enabled: true
+  loop:
+    - php-fpm
+    - nginx
