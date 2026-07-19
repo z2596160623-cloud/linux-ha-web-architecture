@@ -5,7 +5,7 @@
 - Rocky Linux 8-compatible virtual machines on an isolated network.
 - An Ansible control node with SSH key access to every managed host.
 - DNS or `/etc/hosts` entries matching the inventory names.
-- The `community.mysql` Ansible collection.
+- The `ansible.mysql` Ansible collection.
 
 ## Secret preparation
 
